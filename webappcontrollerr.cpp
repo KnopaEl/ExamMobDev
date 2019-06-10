@@ -74,7 +74,7 @@ void Webappcontrollerr::decryption(QString key){
     unsigned char encryptedtext[256] = {0}; // зашифрованный результат out
     unsigned char decryptedtext[256] = {0}; // расшифрованный текст in
     unsigned char iv[16] = {0}; // инициализирующий вектор
-   // unsigned char key1[] = "xq5qR5mU000000000000000000000000"; // пароль (ключ), в последствии будет запрашиваться у пользователя
+   // unsigned char key1[] = "H2DJwpY1"; // пароль (ключ), в последствии будет запрашиваться у пользователя
     memcpy(key1, key.toLatin1().data(),8);
     // 1. Создаётся указатель на несуществующую структуру
     EVP_CIPHER_CTX *ctx; // structure

@@ -13,8 +13,8 @@ ApplicationWindow {
     width: 640
     height: 1000
     title: qsTr("Tabs")
-    signal encrypt(string key);
-    signal decrypt(string key);
+    signal decryption(string key)
+    signal getpage()
 
     SwipeView {
         id: swipeView
@@ -66,29 +66,16 @@ ApplicationWindow {
                 Layout.alignment: Qt.AlignHCenter
 
                 Button {
+                    Layout.alignment: Qt.AlignCenter
                 text: "Получить ответ"
                 font.pixelSize: 25
                 onClicked: {
-                    _myV.getPageInfo();//функция передачи информации из webappcontroller.cpp
+                    getpage();//функция передачи информации из webappcontroller.cpp
                 }}
-
-               // ScrollView{
-               //     focusPolicy: Qt.WheelFocus // прокручивание колесиком
-               //     Layout.alignment: Qt.AlignCenter
-               //     Layout.preferredHeight: 0.6 * window.height
-               //     Layout.preferredWidth: 0.8 * window.width
-
-               //     TextArea{
-               //     id: otbr
-               //     objectName: "otbr"
-               //     wrapMode: Text.WrapAnywhere
-               //     font.pixelSize: 14
-               //     }
-               // }
 
                 RowLayout{
                     Label{
-                       // color: "#FFFFFF"
+                        color: "black"
                         text: "Ответ"
                         font.pixelSize: 20
                     }
@@ -150,19 +137,54 @@ ApplicationWindow {
                     anchors.fill: parent
                     Layout.alignment: Qt.AlignCenter
 
-                    TextField{ //unsigned char key[] = "";
-                        // пароль (ключ), который мы вводим
-                        id: key
+                    Label{
+                        color: "Black"
+                        text: qsTr("Введите вариант:")
+                        font.weight: Font.Bold
+                        Layout.alignment: Qt.AlignCenter
+                        font.pixelSize: Qt.application.font.pixelSize * 2
+                        font{
+                            family: "Courier New"
+                        }
+                    }
+
+                    TextField{
+                        id: variant
                         font.pixelSize: 20
-                        placeholderText: "Ключ шифрования"
+                        placeholderText: "Ваш вариант"
                         Layout.alignment: Qt.AlignCenter
                         background:
                             Rectangle{
-                            id: lg1
+                            id: variant1
                                 anchors.fill: parent
                                 color: "transparent"
                                 border.color: "transparent"
-                                }
+                        }}
+                    Label{
+                        color: "Black"
+                        text: qsTr("Введите пароль:")
+                        font.weight: Font.Bold
+                        Layout.alignment: Qt.AlignCenter
+                        font.pixelSize: Qt.application.font.pixelSize * 2
+                        font{
+                            family: "Courier New"
+                        }
+                    }
+
+                    TextField{ //unsigned char key[] = "H2DJwpY1000000000000000000000000";
+                        // пароль (ключ), который мы вводим
+                        id: key
+                        font.pixelSize: 20
+                        placeholderText: "Пароль"
+                        text: "H2DJwpY1"
+                        Layout.alignment: Qt.AlignCenter
+//                        background:
+//                            Rectangle{
+//                            id: lg1
+//                                anchors.fill: parent
+//                                color: "transparent"
+//                                border.color: "transparent"
+//                                }
                     }
 
                     Button{
@@ -174,9 +196,67 @@ ApplicationWindow {
                               key.placeholderText= "ВВЕДИТЕ КЛЮЧ"
                                return
                             }
-                                decrypt(key.text);
+                                decryption(key.text);
                             }
                     }}
+            background: Rectangle {
+                color:"#F0C6E7"
+            }
+        }
+
+        Page{
+            id: page3
+            width: 640
+            height: 1000
+
+            header: Rectangle { // прямоугольник, то есть место, где содержиться заголовок
+                color:"white"
+                width: 640
+                height: 100
+
+                GridLayout{ //выравнивание заголовка, используя "таблицу"
+                    anchors.fill: parent
+                    columns: 2
+                    rows: 1
+                Image {
+                    Layout.column: 0
+                    Layout.row: 0
+                    sourceSize.height: 100
+                    sourceSize.width: 150
+                    source: "qrc:/image/logo.png"
+                    }
+
+                Label {
+                    Layout.column: 1
+                    Layout.row: 0
+//                     Layout.preferredHeight: 80
+//                     Layout.preferredWidth: 40
+                    color: "#671352"
+                    text: qsTr("О приложении")
+                    font.weight: Font.Bold
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignBottom
+                    font.capitalization: Font.AllUppercase
+                    font.pixelSize: Qt.application.font.pixelSize * 2
+                    font{
+                        family: "Courier New"
+                    }
+                }
+                }}
+            ColumnLayout{
+                Label{
+                    text: qsTr("Данное приложение является " + "\n" + "экзаменационной работой по дисциплине:")
+                    font.weight: Font.Bold
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignBottom
+                    font.capitalization: Font.AllUppercase
+                    font.pixelSize: Qt.application.font.pixelSize * 2
+                    font{
+                        family: "Courier New"
+                    }
+                }
+
+                    }
             background: Rectangle {
                 color:"#F0C6E7"
             }
@@ -188,10 +268,14 @@ ApplicationWindow {
         currentIndex: swipeView.currentIndex
 
         TabButton {
-            text: qsTr("Page 1")
+            text: qsTr("Получение ответа")
         }
         TabButton {
-            text: qsTr("Page 2")
+            text: qsTr("Расшифровка")
+        }
+
+        TabButton {
+            text: qsTr("О приложении")
         }
     }
 }

@@ -11,13 +11,18 @@ class Webappcontrollerr : public QObject
 public:
     explicit Webappcontrollerr(QObject *parent = nullptr);
     QNetworkAccessManager *manager;
+    QByteArray token;
 
 
 signals:
+    void getpage();
+    void pageLoad(QString pHTML);
 
 public slots:
     void onPageInfo(QNetworkReply *reply);
     void getPageInfo();
+    void decryption(QString key);
+
 protected:
 QObject *poisk; //Переменная, которая будет искать объект какой-то в qml
 };

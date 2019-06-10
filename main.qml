@@ -8,10 +8,13 @@ import QtGraphicalEffects 1.12
 import Qt.labs.platform 1.1
 
 ApplicationWindow {
+    id: window
     visible: true
     width: 640
     height: 1000
     title: qsTr("Tabs")
+    signal encrypt(string key);
+    signal decrypt(string key);
 
     SwipeView {
         id: swipeView
@@ -23,11 +26,48 @@ ApplicationWindow {
             width: 640
             height: 1000
 
+            header: Rectangle { // прямоугольник, то есть место, где содержиться заголовок
+                color:"white"
+                width: 640
+                height: 100
+
+                GridLayout{ //выравнивание заголовка, используя "таблицу"
+                    anchors.fill: parent
+                    columns: 2
+                    rows: 1
+                Image {
+                    Layout.column: 0
+                    Layout.row: 0
+                    sourceSize.height: 100
+                    sourceSize.width: 150
+                    source: "qrc:/image/logo.png"
+                    }
+
+                Label {
+                    Layout.column: 1
+                    Layout.row: 0
+//                     Layout.preferredHeight: 80
+//                     Layout.preferredWidth: 40
+                    color: "#671352"
+                    text: qsTr("Получение ответа от сервера")
+                    font.weight: Font.Bold
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignBottom
+                    font.capitalization: Font.AllUppercase
+                    font.pixelSize: Qt.application.font.pixelSize * 2
+                    font{
+                        family: "Courier New"
+                    }
+                }
+                }}
+
             ColumnLayout{
                 anchors.fill: parent
+                Layout.alignment: Qt.AlignHCenter
 
                 Button {
-                text: "Отображение кода"
+                text: "Получить ответ"
+                font.pixelSize: 25
                 onClicked: {
                     _myV.getPageInfo();//функция передачи информации из webappcontroller.cpp
                 }}
@@ -35,8 +75,8 @@ ApplicationWindow {
                // ScrollView{
                //     focusPolicy: Qt.WheelFocus // прокручивание колесиком
                //     Layout.alignment: Qt.AlignCenter
-               //     width: page1.width
-               //     height: page1.height
+               //     Layout.preferredHeight: 0.6 * window.height
+               //     Layout.preferredWidth: 0.8 * window.width
 
                //     TextArea{
                //     id: otbr
@@ -48,29 +88,98 @@ ApplicationWindow {
 
                 RowLayout{
                     Label{
-                        text: "Token"
+                       // color: "#FFFFFF"
+                        text: "Ответ"
+                        font.pixelSize: 20
                     }
                     TextEdit{
                         id: text_edit
                         objectName: "text_edit"
                         readOnly: true
-                        font.pixelSize: 16
+                        font.pixelSize: 20
                     }
                 }
 
 
             }
-
-
-
-
           background: Rectangle {
-              color:"#BABABA"
+              color:"#F0C6E7"
           }
         }
 
         Page{
             id: page2
+            width: 640
+            height: 1000
+
+            header: Rectangle { // прямоугольник, то есть место, где содержиться заголовок
+                color:"white"
+                width: 640
+                height: 100
+
+                GridLayout{ //выравнивание заголовка, используя "таблицу"
+                    anchors.fill: parent
+                    columns: 2
+                    rows: 1
+                Image {
+                    Layout.column: 0
+                    Layout.row: 0
+                    sourceSize.height: 100
+                    sourceSize.width: 150
+                    source: "qrc:/image/logo.png"
+                    }
+
+                Label {
+                    Layout.column: 1
+                    Layout.row: 0
+//                     Layout.preferredHeight: 80
+//                     Layout.preferredWidth: 40
+                    color: "#671352"
+                    text: qsTr("Расшифровка полученной строки")
+                    font.weight: Font.Bold
+                    horizontalAlignment: Text.AlignLeft
+                    verticalAlignment: Text.AlignBottom
+                    font.capitalization: Font.AllUppercase
+                    font.pixelSize: Qt.application.font.pixelSize * 2
+                    font{
+                        family: "Courier New"
+                    }
+                }
+                }}
+            ColumnLayout{
+                    anchors.fill: parent
+                    Layout.alignment: Qt.AlignCenter
+
+                    TextField{ //unsigned char key[] = "";
+                        // пароль (ключ), который мы вводим
+                        id: key
+                        font.pixelSize: 20
+                        placeholderText: "Ключ шифрования"
+                        Layout.alignment: Qt.AlignCenter
+                        background:
+                            Rectangle{
+                            id: lg1
+                                anchors.fill: parent
+                                color: "transparent"
+                                border.color: "transparent"
+                                }
+                    }
+
+                    Button{
+                            font.pixelSize: 20
+                            text: "Дешифровать"
+                            Layout.alignment: Qt.AlignHCenter
+                            onClicked: {
+                            if(key.text == "" ){
+                              key.placeholderText= "ВВЕДИТЕ КЛЮЧ"
+                               return
+                            }
+                                decrypt(key.text);
+                            }
+                    }}
+            background: Rectangle {
+                color:"#F0C6E7"
+            }
         }
     }
 

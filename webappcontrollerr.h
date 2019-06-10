@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QFile>
 
 class Webappcontrollerr : public QObject
 {
@@ -10,8 +11,6 @@ class Webappcontrollerr : public QObject
 public:
     explicit Webappcontrollerr(QObject *parent = nullptr);
     QNetworkAccessManager *manager;
-
-    QString m_accessToken;
 
 
 signals:

@@ -3,5 +3,11 @@
         <file>main.qml</file>
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
+        <file>image/logo.png</file>
+        <file>cryptocontroller.cpp</file>
+        <file>cryptocontroller.h</file>
+        <file>main.cpp</file>
+        <file>webappcontrollerr.cpp</file>
+        <file>webappcontrollerr.h</file>
     </qresource>
 </RCC>

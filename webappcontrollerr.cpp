@@ -42,7 +42,7 @@ void Webappcontrollerr::onPageInfo(QNetworkReply *reply)
         int i = 0;
         if ((i= token.indexOf("temp__value", i)) != -1)
         {
-            qDebug() << "\n" << "Token" << i;
+            qDebug() << "\n" << "ответ" << i;
             qDebug() << token.mid(i+0); //пропускаем n-ое кол-во символов после нашего тега и выводим следующие 3, например, +21
 
             text_edit -> setProperty("text", token.mid(i+0));
